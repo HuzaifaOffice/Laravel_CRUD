@@ -24,8 +24,15 @@ Route::get('/', function () {
 Route::post('insertData', [ProfileController::class, 'Store_product_details']);
 
 //get data from DB and view on the page
-// Route::get('/', [ProfileController::class, 'get_product_details']);
+// Route::get('/', [ProfileController::class, 'get_product_details'])->name('dashboard');
 Route::get('/dashboard', [ProfileController::class, 'get_product_details'])->name('dashboard');
+
+
+//Update data in DB
+Route::post('updateData', [ProfileController::class, 'update_product_details']);
+
+
+
 
 
 

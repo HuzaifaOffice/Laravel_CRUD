@@ -1,8 +1,8 @@
 <x-app-layout>
     <!-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            <!-- {{ __('Dashboard') }} -->
-    <!-- {{ __('CRUD LARAVEL') }} -->
+            {{-- {{ __('Dashboard') }} --}}
+    {{-- {{ __('CRUD LARAVEL') }}  --}}
     <!-- </h2>
     </x-slot> -->
 
@@ -80,7 +80,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $item)
+                                    {{-- @foreach ($data as $item)
                                         <tr>
                                             <th scope="row">{{ $item['id'] }}</th>
                                             <td>{{ $item['product_name'] }}</td>
@@ -89,23 +89,44 @@
                                                 <!-- update button -->
                                                 <button type="button" class="btn btn-outline-primary mx-2 btn-sm"
                                                     data-toggle="modal" data-target="#exampleModal">
-                                                    {{-- onclick="openEditModal({{ $item['id'] }})"> --}}
+                                                    onclick="openEditModal({{ $item['id'] }})">
                                                     Edit
                                                 </button>
                                                 <!-- delete button -->
                                                 <button type="button" class="btn btn-outline-danger btn-sm"
                                                     data-toggle="modal" data-target="#exampleModalCenter"
-                                                    {{-- onclick="openDeleteModal({{ $item['id'] }})" --}}>Delete</button>
+                                                    onclick="openDeleteModal({{ $item['id'] }})">Delete</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach --}}
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <th scope="row">{{ $item['id'] }}</th>
+                                            <td>{{ $item['product_name'] }}</td>
+                                            <td>{{ $item['product_price'] }}</td>
+                                            <td>
+                                                <!-- update button -->
+                                                <button type="button" class="btn btn-outline-primary mx-2 btn-sm"
+                                                    onclick="openEditModal({{ $item['id'] }})">
+                                                    Edit
+                                                </button>
+                                                <!-- delete button -->
+                                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    data-toggle="modal"
+                                                    data-target="#exampleModalCenter">Delete</button>
                                             </td>
                                         </tr>
                                     @endforeach
+
                         </div>
                         </tbody>
                         </table>
 
-                        <!-- For Update Modal-->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+
+                        <!-- For Update Modal -->
+                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- ... (other modal content) ... -->
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -115,19 +136,25 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="edit" method="post">
+                                        <form action="updateData" method="post">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">ID:</label>
+                                                <input type="text" class="form-control" id="p-id" readonly>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="recipient-name" class="col-form-label">Product Name:</label>
                                                 <input type="text" class="form-control" id="p-name"
-                                                    value="1">
+                                                    name="product_name">
                                             </div>
                                             <div class="form-group">
-                                                <label for="message-text" class="col-form-label">product_price:</label>
-                                                <input type="text" class="form-control" id="p-price">
+                                                <label for="message-text" class="col-form-label">Product Price:</label>
+                                                <input type="text" class="form-control" id="p-price"
+                                                    name="product_price">
                                             </div>
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Update Record</button>
+                                            <button type="submit" class="btn btn-primary">Update Record</button>
                                         </form>
                                     </div>
                                 </div>
@@ -136,49 +163,43 @@
 
 
 
+                            <!-- For Delete Modal-->
 
-                        <!-- For Delete Modal-->
-
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Warning</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Delete Confirmed?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">No</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Warning</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Delete Confirmed?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <script>
-                            // Function to open the edit modal with the specific ID
-                            function openEditModal(id) {
-                                // Set the 'ID' value in the edit modal form
-                                document.getElementById('p-id').value = id;
-                                // Show the edit modal
-                                $('#exampleModal').modal('show');
-                            }
 
-                            // Function to open the edit modal with the specific ID
-                            function openDeleteModal(id) {
-                                // Set the 'ID' value in the edit modal form
-                                document.getElementById('p-id').value = id;
-                                // Show the edit modal
-                                $('#exampleModalCenter').modal('show');
-                            }
-                        </script>
+
+                            <script>
+                                // Function to open the edit modal with the specific ID
+                                function openEditModal(id) {
+                                    // Set the 'ID' value in the edit modal form
+                                    document.getElementById('p-id').value = id;
+                                    // Show the edit modal
+                                    $('#editModal').modal('show');
+                                }
+                            </script>
                     </body>
 
 

@@ -74,8 +74,8 @@ class ProfileController extends Controller
         $product->product_price = $request['P_price'];
         $product->save();
 
-        return redirect('/');
-        // return redirect('dashboard');
+        // return redirect('/');
+        return redirect('dashboard');
     }
 
 
@@ -94,11 +94,18 @@ class ProfileController extends Controller
     /**
      * edit the product details.
      */
-    public function edit_product_details($id){
-        $edit_product = product::where('id', $id)->first();
-        // print_r($data);
-        // dd($data);
-        // return view('crud_screen', ['data'=>$data]);
-        return view('dashboard', ['edit_product'=>$edit_product]);
+    public function update_product_details(Request $request){
+        dd($request->all());
+        // return redirect('/');
+        return view('dashboard');
     }
+
+
+
+
+
+
+
+
+
 }
